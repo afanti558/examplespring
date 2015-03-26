@@ -13,7 +13,7 @@
 
     <form action="<c:url value='/loginCheck.html'/>">
         <label for="userName">用户名:</label><input type="text" name="userName" id="userName"><br/>
-        <label for="password">密&nbsp;&nbsp;码:</label><input type="password" name="password" id="password"><br/>
+        <label for="password">密&nbsp;码:</label><input type="password" name="password" id="password"><br/>
         <input type="submit" value="登陆"/>
         <input type="reset" value="重置"/>
     </form>
