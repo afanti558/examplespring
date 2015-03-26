@@ -5,10 +5,14 @@ import com.baobaotao.domain.User;
 import com.baobaotao.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
+import java.io.File;
 import java.util.Date;
 
 /**
@@ -37,5 +41,27 @@ public class webController {
             request.getSession().setAttribute("user",user);
             return new ModelAndView("main");
         }
+    }
+
+    @RequestMapping(value = "/fileupload")
+    public String upload(@RequestParam(value = "logo", required = false) MultipartFile file,
+                         HttpServletRequest request, ModelMap model) {
+
+        String path = request.getSession().getServletContext().getRealPath("/");
+
+        String fileName = file.getOriginalFilename();
+        File targetFile = new File(path, fileName);
+        if(!targetFile.exists()){
+            targetFile.mkdirs();
+        }
+        //保存
+        try {
+            file.transferTo(targetFile);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        model.addAttribute("fileUrl", request.getContextPath()+"/"+fileName);
+
+        return "login";
     }
 }
