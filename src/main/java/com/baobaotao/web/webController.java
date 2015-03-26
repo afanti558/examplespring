@@ -47,7 +47,7 @@ public class webController {
     public String upload(@RequestParam(value = "logo", required = false) MultipartFile file,
                          HttpServletRequest request, ModelMap model) {
 
-        String path = request.getSession().getServletContext().getRealPath("/");
+        String path = request.getSession().getServletContext().getRealPath("/upload");
 
         String fileName = file.getOriginalFilename();
         File targetFile = new File(path, fileName);
