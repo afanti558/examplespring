@@ -11,7 +11,33 @@
     <properties>
         <spring.version>4.1.2.RELEASE</spring.version>
         <mysql.version>5.1.29</mysql.version>
+        <profile.id>${build.profile.id}</profile.id>
     </properties>
+
+    <!-- 差异化构建 -->
+    <profiles>
+        <profile>
+            <id>dev</id>
+            <properties>
+                <build.profile.id>dev</build.profile.id>
+            </properties>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+        </profile>
+        <profile>
+            <id>test</id>
+            <properties>
+                <build.profile.id>test</build.profile.id>
+            </properties>
+        </profile>
+        <profile>
+            <id>prod</id>
+            <properties>
+                <build.profile.id>prod</build.profile.id>
+            </properties>
+        </profile>
+    </profiles>
 
   <dependencies>
       <!--Spring 系列-->
@@ -169,6 +195,21 @@
   <build>
     <finalName>examplespring-web</finalName>
 
+      <!-- 开启主资源和测试资源文件的过滤 -->
+      <resources>
+          <resource>
+              <directory>${project.basedir}/src/main/resources</directory>
+              <filtering>true</filtering>
+          </resource>
+      </resources>
+
+      <testResources>
+          <testResource>
+              <directory>${project.basedir}/src/test/resources</directory>
+              <filtering>true</filtering>
+          </testResource>
+      </testResources>
+
       <plugins>
           <plugin>
               <artifactId>maven-compiler-plugin</artifactId>
@@ -177,6 +218,47 @@
                   <source>1.7</source>
                   <target>1.7</target>
                   <encoding>UTF-8</encoding>
+              </configuration>
+          </plugin>
+
+          <plugin>
+              <groupId>org.codehaus.mojo</groupId>
+              <artifactId>properties-maven-plugin</artifactId>
+              <version>1.0-alpha-2</version>
+              <configuration>
+                  <files>
+                      <file>${project.basedir}/profiles/${profile.id}/jdbc.properties</file>
+                  </files>
+                  <outputFile/>
+                  <properties/>
+              </configuration>
+              <executions>
+                  <execution>
+                      <id>default-lifecycle-properties</id>
+                      <phase>initialize</phase>
+                      <goals>
+                          <goal>read-project-properties</goal>
+                      </goals>
+                  </execution>
+              </executions>
+          </plugin>
+
+          <!-- 对web资源进行过滤 -->
+          <plugin>
+              <groupId>org.apache.maven.plugins</groupId>
+              <artifactId>maven-war-plugin</artifactId>
+              <version>2.6</version>
+              <configuration>
+                  <webResources>
+                      <resource>
+                          <filtering>true</filtering>
+                          <directory>src/main/webapp</directory>
+                          <includes>
+                              <include>**/*.css</include>
+                              <include>**/*.js</include>
+                          </includes>
+                      </resource>
+                  </webResources>
               </configuration>
           </plugin>
       </plugins>

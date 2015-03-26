@@ -18,13 +18,15 @@
     <context:component-scan base-package="com.baobaotao.dao"/>
     <context:component-scan base-package="com.baobaotao.service"/>
 
+    <context:property-placeholder location="classpath:jdbc.properties"/>
+
     <!-- 定义一个使用DBCP实现的数据源 -->
     <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"
         destroy-method="close"
-        p:driverClassName="com.mysql.jdbc.Driver"
-        p:url="jdbc:mysql://localhost:3306/sampledb"
-        p:username="xflin"
-        p:password="111111"/>
+        p:driverClassName="${driverClassName}"
+        p:url="${url}"
+        p:username="${username}"
+        p:password="${password}"/>
 
     <!-- 定义jdbc模板bean -->
     <bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate"
