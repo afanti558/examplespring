@@ -49,4 +49,20 @@
         </tx:attributes>
     </tx:advice>
 
+    <bean id="beana" class="com.baobaotao.dao.Beana">
+        <property name="map">
+            <map>
+                <entry key="aaa">
+                    <value type="int">111</value>
+                </entry>
+                <entry key="bbb">
+                    <value type="int">222</value>
+                </entry>
+                <!--<entry>
+                    <key>null</key>
+                    <value>null</value>
+                </entry>-->
+            </map>
+        </property>
+    </bean>
 </beans>
