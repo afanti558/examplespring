@@ -15,12 +15,16 @@
             http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task-4.1.xsd">
 
     <!-- 扫描包，将Spring注解的类自动转化为Bean，同时完成bean的注入 -->
-    <context:component-scan base-package="com.baobaotao.dao,com.baobaotao.service"/>
+    <context:component-scan base-package="com.ioc.dao"/>
+    <context:component-scan base-package="com.aop.service"/>
     <!-- 开启注解 -->
     <context:annotation-config />
 
     <context:property-placeholder location="classpath:jdbc.properties"/>
 
+<!-- ************************************************************************************* -->
+
+<!-- ************************************************************************************* -->
     <!-- 定义一个使用DBCP实现的数据源 -->
     <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"
         destroy-method="close"
@@ -40,7 +44,7 @@
 
     <!-- 通过aop配置提供事物增强，让service包下所有bean的所有方法拥有事物 -->
     <aop:config proxy-target-class="true">
-        <aop:pointcut id="serviceMethod" expression="execution(* com.baobaotao.service..*(..))"/>
+        <aop:pointcut id="serviceMethod" expression="execution(* com.ioc.service..*(..))"/>
         <aop:advisor pointcut-ref="serviceMethod" advice-ref="txAdvice"/>
     </aop:config>
 
@@ -49,21 +53,19 @@
             <tx:method name="*"/>
         </tx:attributes>
     </tx:advice>
+<!-- ************************************************************************************* -->
+    <!-- aop增强advice -->
+    <bean id="beforeAdvice" class="com.aop.service.BeforeAdvice"/>
+    <bean id="afterAdvice" class="com.aop.service.AfterAdvice"/>
+    <!-- 被代理对象target -->
+    <!--<bean id="aopService" class="com.aop.service.AopService"/>-->
+    <!-- 代理对象 -->
+    <!-- 指定代理接口，多个用list，指定使用的增强，只等对那个Bean进行代理 -->
+    <bean id="aopServiceProxy" class="org.springframework.aop.framework.ProxyFactoryBean"
+    p:proxyInterfaces="com.aop.service.IAopService"
+    p:interceptorNames="sayHelloAdvice"
+    p:target-ref="aopService"
+    />
 
-    <bean id="beana" class="com.baobaotao.dao.Beana">
-        <property name="map">
-            <map>
-                <entry key="aaa">
-                    <value type="int">111</value>
-                </entry>
-                <entry key="bbb">
-                    <value type="int">222</value>
-                </entry>
-                <!--<entry>
-                    <key>null</key>
-                    <value>null</value>
-                </entry>-->
-            </map>
-        </property>
-    </bean>
+<!-- ************************************************************************************* -->
 </beans>
