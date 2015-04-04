@@ -16,9 +16,11 @@
 
     <!-- 扫描包，将Spring注解的类自动转化为Bean，同时完成bean的注入 -->
     <context:component-scan base-package="com.ioc.dao"/>
-    <context:component-scan base-package="com.aop.service"/>
+    <context:component-scan base-package="com.aop.service,com.aop.anotation"/>
     <!-- 开启注解 -->
     <context:annotation-config />
+    <!-- 启用Spring IoC容器的AspectJ支持注解，启用CGLIB创建代理 -->
+    <aop:aspectj-autoproxy/>
 
     <context:property-placeholder location="classpath:jdbc.properties"/>
 
@@ -68,4 +70,8 @@
     />
 
 <!-- ************************************************************************************* -->
+
+
+
+
 </beans>
