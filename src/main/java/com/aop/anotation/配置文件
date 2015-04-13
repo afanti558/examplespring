@@ -1,3 +1,4 @@
+基于逐渐的aop
 1.<!-- 启用Spring IoC容器的AspectJ支持注解，启用CGLIB创建代理 -->
     <aop:aspectj-autoproxy/>
 
