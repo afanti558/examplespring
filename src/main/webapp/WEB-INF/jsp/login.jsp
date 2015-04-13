@@ -13,6 +13,7 @@
     <c:if test="${!empty error}">
         <font color="red"><c:out value="${error}"/> </font>
     </c:if>
+    处理所用时间为：${handlingTime} ms
 
     <form action="<c:url value='/loginCheck.html'/>" id="form1">
         <label for="userName">用户名:</label><input type="text" name="userName" id="userName"><br/>

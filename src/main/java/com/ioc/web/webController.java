@@ -1,5 +1,4 @@
 package com.ioc.web;
-
 import com.ioc.domain.LoginCommand;
 import com.ioc.domain.User;
 import com.ioc.service.UserService;
@@ -15,9 +14,6 @@ import javax.servlet.http.HttpServletRequest;
 import java.io.File;
 import java.util.Date;
 
-/**
- * Created by xiaofan on 2015/3/25.
- */
 @Controller
 public class webController {
     @Autowired
