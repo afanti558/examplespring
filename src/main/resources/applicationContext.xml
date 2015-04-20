@@ -55,7 +55,7 @@
             <tx:method name="*"/>
         </tx:attributes>
     </tx:advice>
-<!-- ************************************************************************************* -->
+<!-- *************************************基于动态代理实现aop************************************************ -->
     <!-- aop增强advice -->
     <bean id="beforeAdvice" class="com.aop.service.BeforeAdvice"/>
     <bean id="afterAdvice" class="com.aop.service.AfterAdvice"/>

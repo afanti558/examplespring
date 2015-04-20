@@ -20,6 +20,8 @@ public class Test {
         System.out.println(arithmeticCalculator.add(2, 3));
         System.out.println("============================");
         System.out.println(arithmeticCalculator.sub(2, 3));
+        IThermometer thermometer = (IThermometer) arithmeticCalculator;//引介增强之后实现了温度接口可以强制类型转换了
+        System.out.println(thermometer.getTemperature());
     }
 
 }
