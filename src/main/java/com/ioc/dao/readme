@@ -1,0 +1,12 @@
+spring dao为不同持久层技术对应的模板类
+
+ORM持久化技术                 模板类
+JDBC                    org.springframework.jdbc.core.JdbcTempleta
+Hibernate 3.0           org.springframework.orm.hibernate3.HibernateTemplate
+iBatis                  org.springframework.orm.ibatis.SqlMapClientTemplate
+...
+
+
+
+spring包含了两个第三方数据源实现类包：Apache的DBCP,依赖commons-pool对象池机制的数据库连接池
+                                        CP0
