@@ -11,6 +11,8 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -39,10 +41,11 @@ public class tableController {
 
     @RequestMapping(value = "/delete",method = RequestMethod.POST)
     @ResponseBody
-    public String delete(HttpServletRequest request,HttpServletResponse response,
-                                   @RequestParam(value = "userId",defaultValue = "0") String userId) {
+    public void delete(HttpServletRequest request,HttpServletResponse response,
+                                   @RequestParam(value = "userId",defaultValue = "0") String userId) throws IOException {
         System.out.println("编号为" + userId + "的用户被删除了");
-        return "{code:OK,msg:good}";
+        PrintWriter out = response.getWriter();
+        out.print( "{code:OK,msg:good}");
 
     }
 }

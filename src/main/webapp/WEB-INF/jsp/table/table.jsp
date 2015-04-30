@@ -6,20 +6,18 @@
 <head lang="en">
 <meta charset="UTF-8">
 <title>table操作</title>
-<script src="/js/jquery-1.10.1.js" type="text/javascript"></script>
-<link href="/css/table1.css" rel="stylesheet" type="text/css">
+<script type="text/javascript" src="/js/jquery-2.1.3.js"></script>
+<link rel="stylesheet" type="text/css" href="/css/table1.css">
 
 <style>
-    /*table{border-collapse: collapse; border-spacing: 0;margin-right: auto;margin-left: auto;width: 800px;}*/
-    /*th, td{border: 1px solid #b5d6e6;font-size: 12px; font-weight: normal;text-align: center;vertical-align: middle;height: 20px;}*/
-    /*th {background-color: Gray;}*/
+
 </style>
 <script>
+    var checkArray= new Array();
     $(document).ready(function(){
         $(".delete").click(function(){
-            alert(123);
             var id = $(this).attr("tId");
-            var url = baseurl + "/table/delete?userId=" + id;
+            var url = "/table/delete?userId=" + id;
             alert(url);
             if(confirm("确定删除吗？")) {
                 $.ajax({
@@ -33,14 +31,37 @@
                         "userId":id
                     },
                     success:function(data){
-                        if(date.code == "OK") {
-                            alert("删除成功");
-                        }else{
-                            alert("删除成功");
-                        }
+                        alert(1);
+                    },
+                    error:function(){
+                        alert(2);
+                        $("." + id).remove();//删除表格当前行
+
                     }
                 });
             }
+        });
+
+        $(".update").click(function(){
+            var id = $(this).attr("tId");
+            $("." + id).find(".name").html("new name");
+        });
+
+
+        //全选   反选
+        $('.checkAll,.reCheckAll').click(function(){
+            $('INPUT[name=id]').attr("checked","checked");
+            checkArray.push($(this).val());
+        });
+
+        //取消
+        $('.unCheckAll').click(function(){
+            $("input[name=id]").each(function(){
+                alert($(this).attr("checked"));
+                if (true==$(this).attr("checked")) {//如果为选中状态
+                    $(this).click();
+                }
+            });
         });
 
 
@@ -62,16 +83,21 @@
         <c:forEach items="${list}" var="var">
             <tr class="${var.userId}">
                 <td>
-                    <input type="checkbox">
+                    <input type="checkbox" name="id" value="${var.userId}">
                 </td>
-                <td>${var.userId}</td>
-                <td>${var.userName}</td>
-                <td><fmt:formatDate value="${var.lastVisit}" pattern="yyyy-MM-dd HH:mm:ss"/> </td>
-                <td>
+                <td class="id">${var.userId}</td>
+                <td class="name">${var.userName}</td>
+                <td class="date"><fmt:formatDate value="${var.lastVisit}" pattern="yyyy-MM-dd HH:mm:ss"/> </td>
+                <td class="option">
                     <a href="javascript:void(0)" class="delete" tId="${var.userId}">删除</a>
+                    <a href="javascript:void(0)" class="update" tId="${var.userId}">改名</a>
                 </td>
             </tr>
         </c:forEach>
     </table>
+    <input type="button" class="checkAll" value="全选"/>
+    <input type="button" class="unCheckAll" value="取消"/>
+    <input type="button" class="reCheckAll" value="反选"/>
+    <h2>${handlingTime}</h2>
 </body>
 </html>

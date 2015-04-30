@@ -7,3 +7,22 @@
     </mvc:interceptors>
 
 注意当开启<mvc:annotation-driven/>时普通的配置拦截器将失效
+
+springmvc中拦截器d接口定义如下：
+package org.springframework.web.servlet;
+import Javax.servlet.http.HttpServletRequest;
+import Javax.servlet.http.HttpServletResponse;
+public interface HandlerInterceptor {
+     // preHandle()方法在业务处理器处理请求之前被调用
+     boolean preHandle(HttpServletRequest request,HttpServletResponse response,
+     Object handler)  throws Exception;
+
+     // postHandle()方法在业务处理器处理请求之后被调用
+     void postHandle(HttpServletRequest request, HttpServletResponse
+response, Object  handler, ModelAndView modelAndView)  throws Exception;
+
+     // afterCompletion()方法在DispatcherServlet完全处理完请求后被调用
+     void afterCompletion( HttpServletRequest request, HttpServletResponse
+response, Object handler, Exception ex)  throws Exception;
+
+ }
