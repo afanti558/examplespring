@@ -5,6 +5,11 @@
          version="3.0" metadata-complete="true">
 
   <display-name>Archetype Created Web Application</display-name>
+    <!-- spring 配置文件 -->
+    <context-param>
+        <param-name>contextConfigLocation</param-name>
+        <param-value>classpath:applicationContext.xml</param-value>
+    </context-param>
 
     <!-- spring 编码过滤器 -->
     <filter>
@@ -20,11 +25,6 @@
         <url-pattern>/*</url-pattern>
     </filter-mapping>
 
-    <!-- spring 配置文件 -->
-    <context-param>
-        <param-name>contextConfigLocation</param-name>
-        <param-value>classpath:applicationContext.xml</param-value>
-    </context-param>
     <listener>
         <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
     </listener>

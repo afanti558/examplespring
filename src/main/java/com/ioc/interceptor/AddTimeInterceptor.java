@@ -6,9 +6,6 @@ import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-/**
- * Created by xiaofan on 2015/4/13.
- */
 public class AddTimeInterceptor extends HandlerInterceptorAdapter {
 
     @Override

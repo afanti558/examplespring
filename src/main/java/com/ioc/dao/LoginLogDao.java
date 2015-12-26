@@ -5,9 +5,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
-/**
- * Created by xiaofan on 2015/3/25.
- */
 @Repository
 public class LoginLogDao {
     @Autowired

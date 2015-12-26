@@ -222,6 +222,7 @@
           </plugin>
 
           <plugin>
+              <!-- 差异化构建插件 -->
               <groupId>org.codehaus.mojo</groupId>
               <artifactId>properties-maven-plugin</artifactId>
               <version>1.0-alpha-2</version>
