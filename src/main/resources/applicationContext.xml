@@ -1,22 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:p="http://www.springframework.org/schema/p"
-       xmlns:util="http://www.springframework.org/schema/util"
        xmlns:context="http://www.springframework.org/schema/context"
        xmlns:aop="http://www.springframework.org/schema/aop"
        xmlns:tx="http://www.springframework.org/schema/tx"
-       xmlns:task="http://www.springframework.org/schema/task"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.1.xsd
-            http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-4.1.xsd
+
             http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.1.xsd
             http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.1.xsd
-            http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.1.xsd
-            http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task-4.1.xsd">
+            http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.1.xsd">
 
     <!-- 扫描包，将Spring注解的类自动转化为Bean，同时完成bean的注入 -->
     <context:component-scan base-package="com.ioc.dao,com.ioc.service"/>
-    <context:component-scan base-package="com.aop.anotation"/>
 
     <!-- 开启注解 -->
     <context:annotation-config />
@@ -24,10 +20,11 @@
     <!-- 启用Spring IoC容器的AspectJ支持注解，启用CGLIB创建代理 -->
     <aop:aspectj-autoproxy/>
 
+    <!-- 引入配置文件 -->
     <context:property-placeholder location="classpath:jdbc.properties"/>
 
 <!-- ************************************************************************************* -->
-    <!-- 定义一个使用DBCP实现的数据源 -->
+    <!-- 定义一个使用DBCP实现的数据源(连接池技术) -->
     <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"
         destroy-method="close"
         p:defaultAutoCommit="true"
@@ -43,8 +40,7 @@
             p:dataSource-ref="dataSource"/>
 
     <!-- 配置事物管理器 -->
-    <bean id="transactionManager"
-          class="org.springframework.jdbc.datasource.DataSourceTransactionManager"
+    <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager"
           p:dataSource-ref="dataSource"/>
 
     <!-- 通过aop配置提供事物增强，让service包下所有bean的所有方法拥有事物 -->
@@ -58,18 +54,6 @@
             <tx:method name="*"/>
         </tx:attributes>
     </tx:advice>
-<!-- *************************************基于动态代理实现aop************************************************ -->
-    <!-- aop增强advice -->
-    <bean id="beforeAdvice" class="com.aop.service.BeforeAdvice"/>
-    <bean id="afterAdvice" class="com.aop.service.AfterAdvice"/>
-    <!-- 被代理对象target -->
-    <bean id="aopService" class="com.aop.service.AopServiceImpl"/>
-    <!--代理目标类的指定方法-->
-    <!-- 指定代理接口，多个用list，指定使用的增强，只等对那个Bean进行代理 -->
-    <bean id="aopServiceProxy" class="org.springframework.aop.framework.ProxyFactoryBean"
-        p:proxyInterfaces="com.aop.service.AopService"
-        p:interceptorNames="beforeAdvice,afterAdvice"
-        p:target-ref="aopService"/>
 
 <!-- ************************************************************************************* -->
 

@@ -7,6 +7,6 @@
     <title>首页</title>
 </head>
 <body>
-    ${user.userName},欢迎您登陆宝宝淘论坛，您但钱的积分为${user.credits};
+    ${user.userName},欢迎您登陆宝宝淘论坛，您当前的积分为${user.credits};
 </body>
 </html>

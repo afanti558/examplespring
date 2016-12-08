@@ -72,7 +72,7 @@
 </script>
 </head>
 <body>
-    <table>
+    <table style="border: 1px red solid">
         <tr>
             <th style="width: 160px;">选择</th>
             <th style="width: 160px;">编号</th>
