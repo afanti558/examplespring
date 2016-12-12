@@ -1,1 +1,3 @@
 github maven差异化构建  文件上传
+
+mybatis基于dao实现来变成（无接口、无mappper文件）
